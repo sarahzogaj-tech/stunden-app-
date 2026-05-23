@@ -1,156 +1,328 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Stunden App VZ</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f4f2f6;font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;color:#222}
-header{background:linear-gradient(135deg,#3a1b4c,#9b55c7);color:#fff;padding:24px 18px;display:flex;gap:14px;align-items:center}
-.logo{width:62px;height:62px;border-radius:50%;background:#fff;color:#7b3f98;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px}
-h1{margin:0;font-size:28px}
-main{padding:16px;max-width:760px;margin:auto}
-.card{background:#fff;border-radius:22px;padding:18px;margin:0 0 16px;box-shadow:0 8px 24px #0001}
-label{font-weight:800;display:block;margin:10px 0 6px}
-input{width:100%;font-size:18px;padding:14px;border-radius:14px;border:1px solid #d6d2da;background:#fff}
-button{font-size:17px;font-weight:900;border:0;border-radius:16px;padding:15px;width:100%;margin-top:10px}
-#saveBtn{background:#2e9b57;color:white}
-#addBtn{background:#7b3f98;color:white}
-#pdfBtn{background:#efe2f5;color:#6e328b}
-#resetBtn,.delBtn{background:#fff0f0;color:#c62828}
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.box{background:#fbf2ff;border-radius:18px;padding:16px;font-weight:800}
-.box span{display:block;font-size:26px;color:#6e328b;margin-top:6px}
-#meldung{display:none;background:#e9f8ee;color:#177233;font-weight:900;border-radius:14px;padding:12px;margin-top:12px}
-.eintrag{border:1px solid #eee;border-radius:18px;padding:14px;margin-top:12px;background:#fff;line-height:1.7}
-.hinweis{color:#666;line-height:1.4}
-@media print{header,.formular,button{display:none!important}body{background:#fff}.card{box-shadow:none;border:1px solid #ddd}}
+
+body{
+margin:0;
+background:#f4f2f6;
+font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+color:#222
+}
+
+header{
+background:linear-gradient(135deg,#3a1b4c,#9b55c7);
+color:#fff;
+padding:24px 18px;
+display:flex;
+gap:14px;
+align-items:center
+}
+
+.logo{
+width:62px;
+height:62px;
+border-radius:50%;
+background:#fff;
+color:#7b3f98;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:30px
+}
+
+h1{
+margin:0;
+font-size:28px
+}
+
+main{
+padding:16px;
+max-width:760px;
+margin:auto
+}
+
+.card{
+background:#fff;
+border-radius:22px;
+padding:18px;
+margin-bottom:16px
+}
+
+label{
+font-weight:800;
+display:block;
+margin:10px 0 8px
+}
+
+input{
+width:100%;
+font-size:18px;
+padding:14px;
+border-radius:18px;
+border:1px solid #ddd
+}
+
+button{
+font-size:17px;
+font-weight:900;
+border:0;
+border-radius:18px;
+padding:15px;
+margin-top:12px;
+width:100%;
+cursor:pointer
+}
+
+#saveBtn{
+background:#2e9b57;
+color:white
+}
+
+#pdfBtn{
+background:#efe2f5;
+color:#6e328b
+}
+
+#resetBtn{
+background:#fff0f0;
+color:#c62828
+}
+
+.summary{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+
+.box{
+background:#fbf2ff;
+border-radius:18px;
+padding:18px
+}
+
+.box span{
+display:block;
+font-size:26px;
+color:#6e328b;
+font-weight:900
+}
+
+.meldung{
+display:none;
+background:#e9f8ee;
+color:#18794e;
+padding:12px;
+border-radius:12px;
+margin-top:12px;
+font-weight:700
+}
+
+.eintrag{
+border:1px solid #eee;
+border-radius:18px;
+padding:14px;
+margin-top:12px;
+background:#fafafa
+}
+
+.hinweis{
+color:#666;
+line-height:1.4
+}
+
+@media print{
+header,.formular,button{
+display:none
+}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">VZ</div>
-  <div><h1>Stunden App</h1><div>Stundennachweis & Fahrtenbuch</div></div>
+<div class="logo">VZ</div>
+
+<div>
+<h1>Stunden App</h1>
+<div>Stundennachweis & Fahrtenbuch</div>
+</div>
 </header>
 
 <main>
-  <div class="card">
-    <label>Name</label>
-    <input id="name" value="Vz">
-    <label>Monat</label>
-    <input id="monat" type="month">
-  </div>
 
-  <div class="summary">
-    <div class="box">Stunden gesamt <span id="sumStunden">0 h</span></div>
-    <div class="box">KM gesamt <span id="sumKm">0 km</span></div>
-  </div>
+<div class="card formular">
 
-  <div class="card formular" style="margin-top:16px">
-    <label>Datum</label>
-    <input id="datum" type="date">
-    <label>Stunden</label>
-    <input id="stunden" type="number" value="24">
-    <label>KM</label>
-    <input id="km" type="number" value="14">
+<label>Name</label>
+<input id="name" value="Vlora Zogaj">
 
-    <button id="saveBtn" type="button">Speichern</button>
-    <button id="addBtn" type="button">+ Eintrag hinzufügen</button>
-    <button id="pdfBtn" type="button">PDF Export</button>
-    <button id="resetBtn" type="button">Zurücksetzen</button>
+<label>Beschäftigungsnummer</label>
+<input id="bnr" placeholder="Später eintragen">
 
-    <div id="meldung">Gespeichert ✅</div>
-    <p class="hinweis">Speichern und „+ Eintrag hinzufügen“ machen dasselbe: Der Eintrag erscheint unten.</p>
-  </div>
+<label>Monat</label>
+<input id="monat" value="Mai 2026">
 
-  <div class="card">
-    <h2>Einträge im Monat</h2>
-    <div id="liste">Noch keine Einträge.</div>
-  </div>
+</div>
+
+<div class="summary">
+
+<div class="box">
+Stunden gesamt
+<span id="stundenGesamt">0 h</span>
+</div>
+
+<div class="box">
+KM gesamt
+<span id="kmGesamt">0 km</span>
+</div>
+
+</div>
+
+<div class="card formular">
+
+<label>Datum</label>
+<input id="datum" type="date">
+
+<label>Stunden</label>
+<input id="stunden" type="number">
+
+<label>Kilometer</label>
+<input id="km" type="number">
+
+<button id="saveBtn">Speichern</button>
+
+<button id="pdfBtn">PDF drucken</button>
+
+<button id="resetBtn">Alles löschen</button>
+
+<div class="meldung" id="meldung">
+Gespeichert
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Einträge</h2>
+
+<div id="liste"></div>
+
+</div>
+
 </main>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-  let eintraege = [];
 
-  const el = id => document.getElementById(id);
-  const name = el("name"), monat = el("monat"), datum = el("datum"), stunden = el("stunden"), km = el("km");
-  const liste = el("liste"), meldung = el("meldung");
+let eintraege = JSON.parse(localStorage.getItem("vz_eintraege") || "[]")
 
-  function isoHeute(){
-    const d = new Date();
-    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-  }
-  function isoMonat(){
-    const d = new Date();
-    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
-  }
-  function deDatum(v){
-    const p = v.split("-");
-    return p.length===3 ? p[2]+"."+p[1]+"."+p[0] : v;
-  }
-  function laden(){
-    try { eintraege = JSON.parse(localStorage.getItem("vz_app_eintraege") || "[]"); } catch(e) { eintraege = []; }
-    name.value = localStorage.getItem("vz_app_name") || "Vz";
-    monat.value = localStorage.getItem("vz_app_monat") || isoMonat();
-    datum.value = isoHeute();
-    anzeigen();
-  }
-  function speichern(){
-    localStorage.setItem("vz_app_eintraege", JSON.stringify(eintraege));
-    localStorage.setItem("vz_app_name", name.value);
-    localStorage.setItem("vz_app_monat", monat.value);
-  }
-  function add(){
-    if(!datum.value){ alert("Bitte Datum auswählen."); return; }
-    eintraege.push({
-      id: Date.now(),
-      datum: datum.value,
-      stunden: Number(String(stunden.value).replace(",", ".")) || 0,
-      km: Number(String(km.value).replace(",", ".")) || 0
-    });
-    monat.value = datum.value.slice(0,7);
-    speichern();
-    anzeigen();
-    meldung.style.display = "block";
-    setTimeout(()=>meldung.style.display="none", 2000);
-    liste.scrollIntoView({behavior:"smooth", block:"start"});
-  }
-  function anzeigen(){
-    speichern();
-    const m = monat.value;
-    const daten = eintraege.filter(e => e.datum.slice(0,7) === m).sort((a,b)=>a.datum.localeCompare(b.datum));
-    let sumS = 0, sumK = 0;
-    liste.innerHTML = "";
-    if(daten.length === 0) liste.textContent = "Noch keine Einträge für diesen Monat.";
-    daten.forEach((e,i)=>{
-      sumS += Number(e.stunden); sumK += Number(e.km);
-      const div = document.createElement("div");
-      div.className = "eintrag";
-      div.innerHTML = `<b>Eintrag ${i+1}</b><br>Datum: ${deDatum(e.datum)}<br>Stunden: ${e.stunden} h<br>KM: ${e.km} km`;
-      const b = document.createElement("button");
-      b.type = "button"; b.className = "delBtn"; b.textContent = "Eintrag löschen";
-      b.addEventListener("click", function(){
-        eintraege = eintraege.filter(x => x.id !== e.id);
-        anzeigen();
-      });
-      div.appendChild(b);
-      liste.appendChild(div);
-    });
-    el("sumStunden").textContent = sumS + " h";
-    el("sumKm").textContent = sumK + " km";
-  }
+anzeigen()
 
-  el("saveBtn").addEventListener("click", add);
-  el("addBtn").addEventListener("click", add);
-  el("pdfBtn").addEventListener("click", () => window.print());
-  el("resetBtn").addEventListener("click", () => { if(confirm("Alle Einträge löschen?")){ eintraege=[]; anzeigen(); } });
-  monat.addEventListener("change", anzeigen);
-  name.addEventListener("input", speichern);
+document.getElementById("saveBtn").onclick = () => {
 
-  laden();
-});
+const datum = document.getElementById("datum").value
+const stunden = document.getElementById("stunden").value
+const km = document.getElementById("km").value
+
+if(!datum || !stunden){
+alert("Bitte Datum und Stunden eingeben")
+return
+}
+
+// Keine gleichen Datums erlauben
+if (eintraege.some(e => e.datum === datum)) {
+alert("Dieses Datum existiert bereits!")
+return
+}
+
+eintraege.push({
+datum,
+stunden:Number(stunden),
+km:Number(km || 0)
+})
+
+speichern()
+
+document.getElementById("datum").value=""
+document.getElementById("stunden").value=""
+document.getElementById("km").value=""
+
+const m = document.getElementById("meldung")
+m.style.display="block"
+
+setTimeout(()=>{
+m.style.display="none"
+},1500)
+
+anzeigen()
+
+}
+
+document.getElementById("pdfBtn").onclick = () => {
+window.print()
+}
+
+document.getElementById("resetBtn").onclick = () => {
+
+if(confirm("Alles löschen?")){
+
+eintraege=[]
+
+speichern()
+
+anzeigen()
+
+}
+
+}
+
+function speichern(){
+localStorage.setItem("vz_eintraege",JSON.stringify(eintraege))
+}
+
+function anzeigen(){
+
+const liste = document.getElementById("liste")
+
+liste.innerHTML=""
+
+let stundenSumme = 0
+let kmSumme = 0
+
+eintraege.forEach((e,index)=>{
+
+stundenSumme += e.stunden
+kmSumme += e.km
+
+liste.innerHTML += `
+
+<div class="eintrag">
+
+<b>${e.datum}</b><br>
+${e.stunden} Stunden<br>
+${e.km} km
+
+</div>
+
+`
+
+})
+
+document.getElementById("stundenGesamt").innerText =
+stundenSumme + " h"
+
+document.getElementById("kmGesamt").innerText =
+kmSumme + " km"
+
+}
+
 </script>
+
 </body>
 </html>

@@ -7,6 +7,7 @@
 <title>Stunden App VZ</title>
 
 <style>
+
 *{
 box-sizing:border-box;
 margin:0;
@@ -160,8 +161,7 @@ background:#fff;
 border-radius:18px;
 padding:16px;
 margin-top:14px;
-border:1px solid #eee;
-position:relative
+border:1px solid #eee
 }
 
 .eintrag h3{
@@ -178,13 +178,13 @@ color:#6e32b8;
 margin-top:8px
 }
 
-.eintrag button{
-width:auto;
-padding:8px 14px;
-font-size:14px;
-margin-top:10px;
+.deleteBtn{
 background:#f9e8e8;
-color:#d62b2b
+color:#d62b2b;
+padding:10px 14px;
+font-size:14px;
+margin-top:12px;
+width:auto
 }
 
 .pdf-preview{
@@ -219,13 +219,6 @@ text-align:center;
 margin-top:40px
 }
 
-.unterschrift-box img{
-width:170px;
-height:auto;
-object-fit:contain;
-margin-bottom:4px
-}
-
 .unterschrift-linie{
 border-top:1px solid #222;
 padding-top:8px;
@@ -246,6 +239,7 @@ color:#666
 }
 
 @media(max-width:700px){
+
 .grid2,
 .summary{
 grid-template-columns:1fr
@@ -256,9 +250,11 @@ flex-direction:column;
 gap:16px;
 align-items:flex-start
 }
+
 }
 
 @media print{
+
 header,
 .card:not(.print-area),
 .summary,
@@ -286,46 +282,57 @@ box-shadow:none
 page-break-before:always;
 break-before:page
 }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <div class="header-left">
-<div class="logo">VZ</div>
+
+<div class="logo">
+VZ
+</div>
 
 <div class="header-text">
 <h1>Stunden App</h1>
 <p>Stundennachweis & Fahrtenbuch</p>
 <small>Vlora Zogaj</small>
 </div>
+
 </div>
 
-<img src="vlora_profilbild.jpg" class="profilbild" alt="Vlora Zogaj">
+<img src="vlora_profilbild.jpg" class="profilbild">
+
 </header>
 
 <main>
 
 <div class="card grid2">
+
 <div>
 <label>Name</label>
-<input type="text" id="name" value="Vlora Zogaj">
+<input type="text" value="Vlora Zogaj">
 </div>
 
 <div>
 <label>Beschäftigungsnummer</label>
-<input type="text" id="beschaeftigung" placeholder="Später eintragen">
+<input type="text" placeholder="Später eintragen">
 </div>
 
 <div>
 <label>Monat</label>
-<input type="text" id="monat" value="Mai 2026">
+<input type="text" value="Mai 2026">
 </div>
+
 </div>
 
 <div class="summary">
+
 <div class="box">
 <span>Stunden gesamt</span>
 <strong id="gesamtstunden">0 h</strong>
@@ -335,10 +342,13 @@ break-before:page
 <span>KM gesamt</span>
 <strong id="gesamtkm">0 km</strong>
 </div>
+
 </div>
 
 <div class="card">
+
 <div class="grid2">
+
 <div>
 <label>Datum</label>
 <input type="date" id="datum">
@@ -348,10 +358,13 @@ break-before:page
 <label>Kilometer Hinfahrt</label>
 <input type="number" id="km" value="7">
 </div>
+
 </div>
 
 <div style="margin-top:18px">
+
 <label>Bemerkungen</label>
+
 <select id="bemerkung">
 <option value="">Keine</option>
 <option>Nachtzuschlag</option>
@@ -360,38 +373,82 @@ break-before:page
 <option>Urlaub</option>
 <option>Krankheit</option>
 </select>
+
 </div>
 
-<button class="saveBtn" onclick="speichern()">Speichern</button>
-<button class="pdfBtn" onclick="window.print()">PDF drucken</button>
+<button class="saveBtn" onclick="speichern()">
+Speichern
+</button>
+
+<button class="pdfBtn" onclick="window.print()">
+PDF drucken
+</button>
+
+<button class="pdfBtn" onclick="pdfTeilen()">
+PDF teilen
+</button>
+
 </div>
 
 <div class="card">
+
 <h2>Einträge</h2>
+
 <div id="eintraege"></div>
+
 </div>
 
 <div class="pdf-preview print-area">
 
 <h2>Stundennachweis</h2>
 
-<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:20px">
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:20px;
+gap:20px
+">
 
 <div style="line-height:1.7">
-<div><strong>Arbeitgeber:</strong> Rundum-Service Edmong Eckl</div>
-<div><strong>Adresse:</strong> Talstr. 13, 01824 Rosenthal-Bielatal</div>
-<div><strong>Telefon:</strong> 0170247155</div>
-<div><strong>Arbeitnehmer:</strong> Vlora Zogaj</div>
+
+<div>
+<strong>Arbeitgeber:</strong>
+Rundum-Service Edmong Eckl
+</div>
+
+<div>
+<strong>Adresse:</strong>
+Talstr. 13, 01824 Rosenthal-Bielatal
+</div>
+
+<div>
+<strong>Telefon:</strong>
+0170247155
+</div>
+
+<div>
+<strong>Arbeitnehmer:</strong>
+Vlora Zogaj
+</div>
+
 </div>
 
 <div style="text-align:right">
-<div><strong>Monat/Jahr:</strong> <span id="pdfMonat">05.2026</span></div>
+
+<div>
+<strong>Monat/Jahr:</strong>
+05.2026
+</div>
+
 </div>
 
 </div>
 
 <table>
+
 <thead>
+
 <tr>
 <th>Datum</th>
 <th>Dienstbeginn</th>
@@ -400,56 +457,93 @@ break-before:page
 <th>U = Urlaub<br>K = Krank</th>
 <th>Bemerkung</th>
 </tr>
+
 </thead>
 
 <tbody id="stundenPdfBody"></tbody>
 
 <tfoot>
+
 <tr>
-<td colspan="3"><strong>Ist-Stunden-Gesamt:</strong></td>
-<td><strong id="pdfGesamtstunden">0 h</strong></td>
+<td colspan="3">
+<strong>Ist-Stunden-Gesamt:</strong>
+</td>
+
+<td>
+<strong id="pdfGesamtstunden">0 h</strong>
+</td>
+
 <td colspan="2"></td>
 </tr>
+
 </tfoot>
+
 </table>
 
-<div style="display:flex;justify-content:space-between;gap:30px;margin-top:30px">
+<div style="
+display:flex;
+justify-content:space-between;
+gap:30px;
+margin-top:30px
+">
 
-<table style="width:48%;border-collapse:collapse;font-size:13px">
+<table style="
+width:48%;
+border-collapse:collapse;
+font-size:13px
+">
+
 <tr>
 <th colspan="2">Stundenübersicht</th>
 </tr>
+
 <tr>
 <td>Ist-Stunden:</td>
 <td id="uebersichtIst">0 h</td>
 </tr>
+
 <tr>
 <td>Soll-Stunden lt. Vertrag:</td>
 <td>-</td>
 </tr>
+
 <tr>
 <td>Differenz:</td>
 <td>-</td>
 </tr>
+
 <tr>
 <td>Vormonat:</td>
 <td>-</td>
 </tr>
+
 <tr>
 <td>Neuer Stundenstand:</td>
 <td id="uebersichtNeu">0 h</td>
 </tr>
+
 <tr>
 <td>- auszuzahlende Stunden:</td>
 <td id="uebersichtAuszahlung">0 h</td>
 </tr>
+
 </table>
 
-<div style="width:40%;display:flex;justify-content:center;align-items:flex-end">
+<div style="
+width:40%;
+display:flex;
+justify-content:center;
+align-items:flex-end
+">
+
 <div class="unterschrift-box">
-<img src="unterschrift.png" alt="Unterschrift">
-<div class="unterschrift-linie">Unterschrift: Vlora Zogaj</div>
+
+<div class="unterschrift-linie">
+Unterschrift: Vlora Zogaj
 </div>
+
+</div>
+
 </div>
 
 </div>
@@ -459,27 +553,43 @@ break-before:page
 <h2>Fahrtkosten</h2>
 
 <table>
+
 <thead>
+
 <tr>
 <th>Datum</th>
 <th>Strecke</th>
 <th>KM</th>
 </tr>
+
 </thead>
 
 <tbody id="fahrtkostenPdfBody"></tbody>
 
 <tfoot>
+
 <tr>
-<td colspan="2"><strong>Gesamt</strong></td>
-<td><strong id="pdfGesamtKm">0 km</strong></td>
+
+<td colspan="2">
+<strong>Gesamt</strong>
+</td>
+
+<td>
+<strong id="pdfGesamtKm">0 km</strong>
+</td>
+
 </tr>
+
 </tfoot>
+
 </table>
 
 <div class="unterschrift-box">
-<img src="unterschrift.png" alt="Unterschrift">
-<div class="unterschrift-linie">Unterschrift: Vlora Zogaj</div>
+
+<div class="unterschrift-linie">
+Unterschrift: Vlora Zogaj
+</div>
+
 </div>
 
 </div>
@@ -493,13 +603,16 @@ Die Rückfahrt wird automatisch am nächsten Tag erfasst.
 </main>
 
 <script>
-let daten = JSON.parse(localStorage.getItem("stundenDaten")) || [];
+
+let daten =
+JSON.parse(localStorage.getItem("stundenDaten")) || [];
 
 anzeigen();
 
 function speichern(){
 
-const datum = document.getElementById("datum").value;
+const datum =
+document.getElementById("datum").value;
 
 if(!datum){
 alert("Bitte Datum auswählen");
@@ -511,8 +624,11 @@ alert("Dieses Datum existiert bereits");
 return;
 }
 
-const km = parseInt(document.getElementById("km").value) || 7;
-const bemerkung = document.getElementById("bemerkung").value;
+const km =
+parseInt(document.getElementById("km").value) || 7;
+
+const bemerkung =
+document.getElementById("bemerkung").value;
 
 daten.push({
 datum,
@@ -521,7 +637,10 @@ km,
 bemerkung
 });
 
-localStorage.setItem("stundenDaten", JSON.stringify(daten));
+localStorage.setItem(
+"stundenDaten",
+JSON.stringify(daten)
+);
 
 anzeigen();
 
@@ -529,16 +648,22 @@ anzeigen();
 
 function anzeigen(){
 
-const liste = document.getElementById("eintraege");
+const liste =
+document.getElementById("eintraege");
+
 liste.innerHTML = "";
 
 let gesamtstunden = 0;
 let gesamtkm = 0;
 
-const pdfBody = document.getElementById("stundenPdfBody");
+const pdfBody =
+document.getElementById("stundenPdfBody");
+
 pdfBody.innerHTML = "";
 
-const kmBody = document.getElementById("fahrtkostenPdfBody");
+const kmBody =
+document.getElementById("fahrtkostenPdfBody");
+
 kmBody.innerHTML = "";
 
 daten.forEach((e,index)=>{
@@ -548,13 +673,28 @@ gesamtkm += e.km * 2;
 
 liste.innerHTML += `
 <div class="eintrag">
+
 <h3>${formatDatum(e.datum)}</h3>
+
 <div>24 Stunden</div>
+
 <div>Hinfahrt: ${e.km} km</div>
+
 <div>Rückfahrt: ${e.km} km</div>
-${e.bemerkung ? `<div class="badge">${e.bemerkung}</div>` : ""}
+
+${e.bemerkung
+? `<div class="badge">${e.bemerkung}</div>`
+: ""}
+
 <br>
-<button onclick="eintragLoeschen(${index})">Eintrag löschen</button>
+
+<button class="deleteBtn"
+onclick="eintragLoeschen(${index})">
+
+Eintrag löschen
+
+</button>
+
 </div>
 `;
 
@@ -564,7 +704,15 @@ pdfBody.innerHTML += `
 <td>08:30</td>
 <td>08:30</td>
 <td>24 h</td>
-<td>${e.bemerkung === "Urlaub" ? "U" : e.bemerkung === "Krankheit" ? "K" : ""}</td>
+
+<td>
+${e.bemerkung === "Urlaub"
+? "U"
+: e.bemerkung === "Krankheit"
+? "K"
+: ""}
+</td>
+
 <td>${e.bemerkung || ""}</td>
 </tr>
 `;
@@ -585,25 +733,47 @@ kmBody.innerHTML += `
 
 });
 
-document.getElementById("gesamtstunden").innerText = gesamtstunden + " h";
-document.getElementById("gesamtkm").innerText = gesamtkm + " km";
-document.getElementById("pdfGesamtstunden").innerText = gesamtstunden + " h";
-document.getElementById("pdfGesamtKm").innerText = gesamtkm + " km";
-document.getElementById("uebersichtIst").innerText = gesamtstunden + " h";
-document.getElementById("uebersichtNeu").innerText = gesamtstunden + " h";
-document.getElementById("uebersichtAuszahlung").innerText = gesamtstunden + " h";
+document.getElementById("gesamtstunden").innerText =
+gesamtstunden + " h";
+
+document.getElementById("gesamtkm").innerText =
+gesamtkm + " km";
+
+document.getElementById("pdfGesamtstunden").innerText =
+gesamtstunden + " h";
+
+document.getElementById("pdfGesamtKm").innerText =
+gesamtkm + " km";
+
+document.getElementById("uebersichtIst").innerText =
+gesamtstunden + " h";
+
+document.getElementById("uebersichtNeu").innerText =
+gesamtstunden + " h";
+
+document.getElementById("uebersichtAuszahlung").innerText =
+gesamtstunden + " h";
 
 }
 
 function formatDatum(d){
+
 const p = d.split("-");
-return p.length === 3 ? p[2] + "." + p[1] + "." + p[0] : d;
+
+return p.length === 3
+? p[2] + "." + p[1] + "." + p[0]
+: d;
+
 }
 
 function naechsterTag(d){
+
 const datum = new Date(d + "T12:00:00");
+
 datum.setDate(datum.getDate() + 1);
+
 return datum.toLocaleDateString("de-DE");
+
 }
 
 function eintragLoeschen(index){
@@ -612,13 +782,45 @@ if(confirm("Eintrag wirklich löschen?")){
 
 daten.splice(index,1);
 
-localStorage.setItem("stundenDaten", JSON.stringify(daten));
+localStorage.setItem(
+"stundenDaten",
+JSON.stringify(daten)
+);
 
 anzeigen();
 
 }
 
 }
+
+async function pdfTeilen(){
+
+try{
+
+if(navigator.share){
+
+await navigator.share({
+title:"Stundennachweis",
+text:"Stundennachweis & Fahrtkosten",
+url:window.location.href
+});
+
+}else{
+
+alert(
+"Teilen wird auf diesem Gerät nicht unterstützt."
+);
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+}
+
 </script>
 
 </body>

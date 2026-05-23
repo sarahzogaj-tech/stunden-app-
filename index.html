@@ -3,54 +3,623 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Stunden App VZ</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f4f2f6;color:#222;padding-bottom:50px}
-header{background:linear-gradient(135deg,#3a1b4c,#9b55c7);padding:22px;color:#fff;display:flex;align-items:center;justify-content:space-between}
-.header-left{display:flex;align-items:center;gap:18px}
-.logo{width:74px;height:74px;border-radius:50%;background:#fff;color:#7b3f98;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:34px}
-.header-text h1{font-size:28px;margin-bottom:4px}
-.header-text p{font-size:15px;opacity:.95}
-.header-text small{display:block;margin-top:4px;font-size:20px;font-weight:700}
-.profilbild{width:74px;height:74px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.7)}
-main{padding:18px;max-width:1100px;margin:auto}
-.card{background:#fff;padding:20px;border-radius:22px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-label{display:block;font-weight:800;margin-bottom:8px;font-size:16px}
-input,select{width:100%;padding:16px;border-radius:16px;border:1px solid #ddd;font-size:18px;background:#fff}
-button{width:100%;padding:16px;border:none;border-radius:16px;font-size:18px;font-weight:800;cursor:pointer;margin-top:14px}
-.saveBtn{background:#2e9b57;color:#fff}.pdfBtn{background:#efe2f5;color:#6e32b8}
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
-.box{background:#f3e9f9;padding:22px;border-radius:22px}.box span{display:block;font-size:20px;margin-bottom:10px}.box strong{font-size:34px;color:#6e32b8}
-.eintrag{background:#fff;border-radius:18px;padding:16px;margin-top:14px;border:1px solid #eee;position:relative}.eintrag h3{margin-bottom:8px}
-.badge{display:inline-block;padding:6px 10px;border-radius:10px;font-size:13px;background:#efe2f5;color:#6e32b8;margin-top:8px}.eintrag button{width:auto;padding:8px 14px;font-size:14px;margin-top:10px;background:#f9e8e8;color:#d62b2b}
-.pdf-preview{background:#fff;padding:26px;border-radius:22px;margin-top:18px}.pdf-preview table{width:100%;border-collapse:collapse;margin-top:10px}.pdf-preview th,.pdf-preview td{border:1px solid #999;padding:6px;font-size:13px;text-align:center}.pdf-preview h2{color:#6e32b8;margin-bottom:18px}
-.footer-info{margin-top:16px;font-size:13px;text-align:center;color:#666}.unterschrift-leer{border-top:1px solid #222;width:100%;text-align:center;padding-top:8px;margin-top:65px}
-@media(max-width:700px){.grid2,.summary{grid-template-columns:1fr}header{flex-direction:column;gap:16px;align-items:flex-start}}
-@media print{header,.card:not(.print-area),.summary,.footer-info{display:none!important}body{background:#fff}main{padding:0;max-width:none}.pdf-preview{border-radius:0;margin:0;padding:16mm;box-shadow:none}}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f2f6;
+color:#222;
+padding-bottom:50px
+}
+
+header{
+background:linear-gradient(135deg,#3a1b4c,#9b55c7);
+padding:22px;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between
+}
+
+.header-left{
+display:flex;
+align-items:center;
+gap:18px
+}
+
+.logo{
+width:74px;
+height:74px;
+border-radius:50%;
+background:#fff;
+color:#7b3f98;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:34px
+}
+
+.header-text h1{
+font-size:28px;
+margin-bottom:4px
+}
+
+.header-text p{
+font-size:15px;
+opacity:.95
+}
+
+.header-text small{
+display:block;
+margin-top:4px;
+font-size:20px;
+font-weight:700
+}
+
+.profilbild{
+width:74px;
+height:74px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid rgba(255,255,255,.7)
+}
+
+main{
+padding:18px;
+max-width:1100px;
+margin:auto
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:22px;
+margin-bottom:18px;
+box-shadow:0 2px 10px rgba(0,0,0,.04)
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px
+}
+
+label{
+display:block;
+font-weight:800;
+margin-bottom:8px;
+font-size:16px
+}
+
+input,
+select{
+width:100%;
+padding:16px;
+border-radius:16px;
+border:1px solid #ddd;
+font-size:18px;
+background:#fff
+}
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+font-size:18px;
+font-weight:800;
+cursor:pointer;
+margin-top:14px
+}
+
+.saveBtn{
+background:#2e9b57;
+color:#fff
+}
+
+.pdfBtn{
+background:#efe2f5;
+color:#6e32b8
+}
+
+.summary{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-bottom:18px
+}
+
+.box{
+background:#f3e9f9;
+padding:22px;
+border-radius:22px
+}
+
+.box span{
+display:block;
+font-size:20px;
+margin-bottom:10px
+}
+
+.box strong{
+font-size:34px;
+color:#6e32b8
+}
+
+.eintrag{
+background:#fff;
+border-radius:18px;
+padding:16px;
+margin-top:14px;
+border:1px solid #eee;
+position:relative
+}
+
+.eintrag h3{
+margin-bottom:8px
+}
+
+.badge{
+display:inline-block;
+padding:6px 10px;
+border-radius:10px;
+font-size:13px;
+background:#efe2f5;
+color:#6e32b8;
+margin-top:8px
+}
+
+.eintrag button{
+width:auto;
+padding:8px 14px;
+font-size:14px;
+margin-top:10px;
+background:#f9e8e8;
+color:#d62b2b
+}
+
+.pdf-preview{
+background:#fff;
+padding:26px;
+border-radius:22px;
+margin-top:18px
+}
+
+.pdf-preview table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px
+}
+
+.pdf-preview th,
+.pdf-preview td{
+border:1px solid #999;
+padding:6px;
+font-size:13px;
+text-align:center
+}
+
+.pdf-preview h2{
+color:#6e32b8;
+margin-bottom:18px
+}
+
+.unterschrift-box{
+width:260px;
+text-align:center;
+margin-top:40px
+}
+
+.unterschrift-box img{
+width:170px;
+height:auto;
+object-fit:contain;
+margin-bottom:4px
+}
+
+.unterschrift-linie{
+border-top:1px solid #222;
+padding-top:8px;
+font-size:14px
+}
+
+.fahrtkosten-seite{
+page-break-before:always;
+break-before:page;
+margin-top:40px
+}
+
+.footer-info{
+margin-top:16px;
+font-size:13px;
+text-align:center;
+color:#666
+}
+
+@media(max-width:700px){
+.grid2,
+.summary{
+grid-template-columns:1fr
+}
+
+header{
+flex-direction:column;
+gap:16px;
+align-items:flex-start
+}
+}
+
+@media print{
+header,
+.card:not(.print-area),
+.summary,
+.footer-info{
+display:none!important
+}
+
+body{
+background:#fff
+}
+
+main{
+padding:0;
+max-width:none
+}
+
+.pdf-preview{
+border-radius:0;
+margin:0;
+padding:16mm;
+box-shadow:none
+}
+
+.fahrtkosten-seite{
+page-break-before:always;
+break-before:page
+}
+}
 </style>
 </head>
+
 <body>
-<header><div class="header-left"><div class="logo">VZ</div><div class="header-text"><h1>Stunden App</h1><p>Stundennachweis & Fahrtenbuch</p><small>Vlora Zogaj</small></div></div><img src="data:image/jpeg;base64,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" class="profilbild" alt="Vlora Zogaj"></header>
+
+<header>
+<div class="header-left">
+<div class="logo">VZ</div>
+
+<div class="header-text">
+<h1>Stunden App</h1>
+<p>Stundennachweis & Fahrtenbuch</p>
+<small>Vlora Zogaj</small>
+</div>
+</div>
+
+<img src="vlora_profilbild.jpg" class="profilbild" alt="Vlora Zogaj">
+</header>
+
 <main>
-<div class="card grid2"><div><label>Name</label><input type="text" id="name" value="Vlora Zogaj"></div><div><label>Beschäftigungsnummer</label><input type="text" id="beschaeftigung" placeholder="Später eintragen"></div><div><label>Monat</label><input type="text" id="monat" value="Mai 2026"></div></div>
-<div class="summary"><div class="box"><span>Stunden gesamt</span><strong id="gesamtstunden">0 h</strong></div><div class="box"><span>KM gesamt</span><strong id="gesamtkm">0 km</strong></div></div>
-<div class="card"><div class="grid2"><div><label>Datum</label><input type="date" id="datum"></div><div><label>Kilometer (Hinfahrt)</label><input type="number" id="km" value="7"></div></div><div style="margin-top:18px"><label>Bemerkungen</label><select id="bemerkung"><option value="">Keine</option><option>Nachtzuschlag</option><option>Nachtzuschlag + Sonntag</option><option>Nachtzuschlag + Feiertag</option><option>Urlaub</option><option>Krankheit</option></select></div><button class="saveBtn" onclick="speichern()">Speichern</button><button class="pdfBtn" onclick="window.print()">PDF drucken</button></div>
-<div class="card"><h2>Einträge</h2><div id="eintraege"></div></div>
-<div class="pdf-preview print-area"><h2>Stundennachweis</h2><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:20px"><div style="line-height:1.7"><div><strong>Arbeitgeber:</strong> Rundum-Service Edmong Eckl</div><div><strong>Adresse:</strong> Talstr. 13, 01824 Rosenthal-Bielatal</div><div><strong>Telefon:</strong> 0170247155</div><div><strong>Arbeitnehmer:</strong> Vlora Zogaj</div></div><div style="text-align:right"><div><strong>Monat/Jahr:</strong> <span id="pdfMonat">05.2026</span></div></div></div>
-<table><thead><tr><th>Datum</th><th>Dienstbeginn</th><th>Dienstende</th><th>Gesamt Arbeitszeit</th><th>U = Urlaub<br>K = Krank</th><th>Bemerkung</th></tr></thead><tbody id="stundenPdfBody"></tbody><tfoot><tr><td colspan="3"><strong>Ist-Stunden-Gesamt:</strong></td><td><strong id="pdfGesamtstunden">0 h</strong></td><td colspan="2"></td></tr></tfoot></table>
-<div style="display:flex;justify-content:space-between;gap:30px;margin-top:30px"><table style="width:48%;border-collapse:collapse;font-size:13px"><tr><th colspan="2">Stundenübersicht</th></tr><tr><td>Ist-Stunden:</td><td id="uebersichtIst">0 h</td></tr><tr><td>Soll-Stunden (lt. Vertrag):</td><td>-</td></tr><tr><td>Differenz:</td><td>-</td></tr><tr><td>Vormonat:</td><td>-</td></tr><tr><td>Neuer Stundenstand:</td><td id="uebersichtNeu">0 h</td></tr><tr><td>- auszuzahlende Stunden:</td><td id="uebersichtAuszahlung">0 h</td></tr></table><div style="width:40%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center"><div class="unterschrift-leer">Unterschrift: Vlora Zogaj</div></div></div>
-<div style="margin-top:28px"><h2>Fahrtkosten</h2><table><thead><tr><th>Datum</th><th>Strecke</th><th>KM</th></tr></thead><tbody id="fahrtkostenPdfBody"></tbody><tfoot><tr><td colspan="2"><strong>Gesamt</strong></td><td><strong id="pdfGesamtKm">0 km</strong></td></tr></tfoot></table><div style="margin-top:40px;width:220px;text-align:center"><div class="unterschrift-leer">Unterschrift: Vlora Zogaj</div></div></div></div>
-<div class="footer-info">Die Rückfahrt wird automatisch am nächsten Tag erfasst.</div>
+
+<div class="card grid2">
+<div>
+<label>Name</label>
+<input type="text" id="name" value="Vlora Zogaj">
+</div>
+
+<div>
+<label>Beschäftigungsnummer</label>
+<input type="text" id="beschaeftigung" placeholder="Später eintragen">
+</div>
+
+<div>
+<label>Monat</label>
+<input type="text" id="monat" value="Mai 2026">
+</div>
+</div>
+
+<div class="summary">
+<div class="box">
+<span>Stunden gesamt</span>
+<strong id="gesamtstunden">0 h</strong>
+</div>
+
+<div class="box">
+<span>KM gesamt</span>
+<strong id="gesamtkm">0 km</strong>
+</div>
+</div>
+
+<div class="card">
+<div class="grid2">
+<div>
+<label>Datum</label>
+<input type="date" id="datum">
+</div>
+
+<div>
+<label>Kilometer Hinfahrt</label>
+<input type="number" id="km" value="7">
+</div>
+</div>
+
+<div style="margin-top:18px">
+<label>Bemerkungen</label>
+<select id="bemerkung">
+<option value="">Keine</option>
+<option>Nachtzuschlag</option>
+<option>Nachtzuschlag + Sonntag</option>
+<option>Nachtzuschlag + Feiertag</option>
+<option>Urlaub</option>
+<option>Krankheit</option>
+</select>
+</div>
+
+<button class="saveBtn" onclick="speichern()">Speichern</button>
+<button class="pdfBtn" onclick="window.print()">PDF drucken</button>
+</div>
+
+<div class="card">
+<h2>Einträge</h2>
+<div id="eintraege"></div>
+</div>
+
+<div class="pdf-preview print-area">
+
+<h2>Stundennachweis</h2>
+
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;gap:20px">
+
+<div style="line-height:1.7">
+<div><strong>Arbeitgeber:</strong> Rundum-Service Edmong Eckl</div>
+<div><strong>Adresse:</strong> Talstr. 13, 01824 Rosenthal-Bielatal</div>
+<div><strong>Telefon:</strong> 0170247155</div>
+<div><strong>Arbeitnehmer:</strong> Vlora Zogaj</div>
+</div>
+
+<div style="text-align:right">
+<div><strong>Monat/Jahr:</strong> <span id="pdfMonat">05.2026</span></div>
+</div>
+
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Datum</th>
+<th>Dienstbeginn</th>
+<th>Dienstende</th>
+<th>Gesamt Arbeitszeit</th>
+<th>U = Urlaub<br>K = Krank</th>
+<th>Bemerkung</th>
+</tr>
+</thead>
+
+<tbody id="stundenPdfBody"></tbody>
+
+<tfoot>
+<tr>
+<td colspan="3"><strong>Ist-Stunden-Gesamt:</strong></td>
+<td><strong id="pdfGesamtstunden">0 h</strong></td>
+<td colspan="2"></td>
+</tr>
+</tfoot>
+</table>
+
+<div style="display:flex;justify-content:space-between;gap:30px;margin-top:30px">
+
+<table style="width:48%;border-collapse:collapse;font-size:13px">
+<tr>
+<th colspan="2">Stundenübersicht</th>
+</tr>
+<tr>
+<td>Ist-Stunden:</td>
+<td id="uebersichtIst">0 h</td>
+</tr>
+<tr>
+<td>Soll-Stunden lt. Vertrag:</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Differenz:</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Vormonat:</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Neuer Stundenstand:</td>
+<td id="uebersichtNeu">0 h</td>
+</tr>
+<tr>
+<td>- auszuzahlende Stunden:</td>
+<td id="uebersichtAuszahlung">0 h</td>
+</tr>
+</table>
+
+<div style="width:40%;display:flex;justify-content:center;align-items:flex-end">
+<div class="unterschrift-box">
+<img src="unterschrift.png" alt="Unterschrift">
+<div class="unterschrift-linie">Unterschrift: Vlora Zogaj</div>
+</div>
+</div>
+
+</div>
+
+<div class="fahrtkosten-seite">
+
+<h2>Fahrtkosten</h2>
+
+<table>
+<thead>
+<tr>
+<th>Datum</th>
+<th>Strecke</th>
+<th>KM</th>
+</tr>
+</thead>
+
+<tbody id="fahrtkostenPdfBody"></tbody>
+
+<tfoot>
+<tr>
+<td colspan="2"><strong>Gesamt</strong></td>
+<td><strong id="pdfGesamtKm">0 km</strong></td>
+</tr>
+</tfoot>
+</table>
+
+<div class="unterschrift-box">
+<img src="unterschrift.png" alt="Unterschrift">
+<div class="unterschrift-linie">Unterschrift: Vlora Zogaj</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer-info">
+Die Rückfahrt wird automatisch am nächsten Tag erfasst.
+</div>
+
 </main>
+
 <script>
-let daten=JSON.parse(localStorage.getItem("stundenDaten"))||[];anzeigen();
-function speichern(){const datum=document.getElementById("datum").value;if(!datum){alert("Bitte Datum auswählen");return}if(daten.find(e=>e.datum===datum)){alert("Dieses Datum existiert bereits");return}const km=parseInt(document.getElementById("km").value)||7;const bemerkung=document.getElementById("bemerkung").value;daten.push({datum,stunden:24,km,bemerkung});localStorage.setItem("stundenDaten",JSON.stringify(daten));anzeigen();}
-function anzeigen(){const liste=document.getElementById("eintraege");liste.innerHTML="";let gesamtstunden=0,gesamtkm=0;const pdfBody=document.getElementById("stundenPdfBody");pdfBody.innerHTML="";const kmBody=document.getElementById("fahrtkostenPdfBody");kmBody.innerHTML="";daten.forEach((e,index)=>{gesamtstunden+=24;gesamtkm+=e.km*2;liste.innerHTML+=`<div class="eintrag"><h3>${formatDatum(e.datum)}</h3><div>24 Stunden</div><div>Hinfahrt: ${e.km} km</div><div>Rückfahrt: ${e.km} km</div>${e.bemerkung?`<div class="badge">${e.bemerkung}</div>`:""}<br><button onclick="eintragLoeschen(${index})">Eintrag löschen</button></div>`;pdfBody.innerHTML+=`<tr><td>${formatDatum(e.datum)}</td><td>08:30</td><td>08:30</td><td>24 h</td><td>${e.bemerkung==="Urlaub"?"U":e.bemerkung==="Krankheit"?"K":""}</td><td>${e.bemerkung||""}</td></tr>`;kmBody.innerHTML+=`<tr><td>${formatDatum(e.datum)}</td><td>Hepberg - Etting</td><td>${e.km} km</td></tr><tr><td>${naechsterTag(e.datum)}</td><td>Etting - Hepberg</td><td>${e.km} km</td></tr>`;});document.getElementById("gesamtstunden").innerText=gesamtstunden+" h";document.getElementById("gesamtkm").innerText=gesamtkm+" km";document.getElementById("pdfGesamtstunden").innerText=gesamtstunden+" h";document.getElementById("pdfGesamtKm").innerText=gesamtkm+" km";document.getElementById("uebersichtIst").innerText=gesamtstunden+" h";document.getElementById("uebersichtNeu").innerText=gesamtstunden+" h";document.getElementById("uebersichtAuszahlung").innerText=gesamtstunden+" h";}
-function formatDatum(d){const p=d.split("-");return p.length===3?p[2]+"."+p[1]+"."+p[0]:d}
-function naechsterTag(d){const datum=new Date(d+"T12:00:00");datum.setDate(datum.getDate()+1);return datum.toLocaleDateString("de-DE")}
-function eintragLoeschen(index){if(confirm("Eintrag wirklich löschen?")){daten.splice(index,1);localStorage.setItem("stundenDaten",JSON.stringify(daten));anzeigen();}}
+let daten = JSON.parse(localStorage.getItem("stundenDaten")) || [];
+
+anzeigen();
+
+function speichern(){
+
+const datum = document.getElementById("datum").value;
+
+if(!datum){
+alert("Bitte Datum auswählen");
+return;
+}
+
+if(daten.find(e => e.datum === datum)){
+alert("Dieses Datum existiert bereits");
+return;
+}
+
+const km = parseInt(document.getElementById("km").value) || 7;
+const bemerkung = document.getElementById("bemerkung").value;
+
+daten.push({
+datum,
+stunden:24,
+km,
+bemerkung
+});
+
+localStorage.setItem("stundenDaten", JSON.stringify(daten));
+
+anzeigen();
+
+}
+
+function anzeigen(){
+
+const liste = document.getElementById("eintraege");
+liste.innerHTML = "";
+
+let gesamtstunden = 0;
+let gesamtkm = 0;
+
+const pdfBody = document.getElementById("stundenPdfBody");
+pdfBody.innerHTML = "";
+
+const kmBody = document.getElementById("fahrtkostenPdfBody");
+kmBody.innerHTML = "";
+
+daten.forEach((e,index)=>{
+
+gesamtstunden += 24;
+gesamtkm += e.km * 2;
+
+liste.innerHTML += `
+<div class="eintrag">
+<h3>${formatDatum(e.datum)}</h3>
+<div>24 Stunden</div>
+<div>Hinfahrt: ${e.km} km</div>
+<div>Rückfahrt: ${e.km} km</div>
+${e.bemerkung ? `<div class="badge">${e.bemerkung}</div>` : ""}
+<br>
+<button onclick="eintragLoeschen(${index})">Eintrag löschen</button>
+</div>
+`;
+
+pdfBody.innerHTML += `
+<tr>
+<td>${formatDatum(e.datum)}</td>
+<td>08:30</td>
+<td>08:30</td>
+<td>24 h</td>
+<td>${e.bemerkung === "Urlaub" ? "U" : e.bemerkung === "Krankheit" ? "K" : ""}</td>
+<td>${e.bemerkung || ""}</td>
+</tr>
+`;
+
+kmBody.innerHTML += `
+<tr>
+<td>${formatDatum(e.datum)}</td>
+<td>Hepberg - Etting</td>
+<td>${e.km} km</td>
+</tr>
+
+<tr>
+<td>${naechsterTag(e.datum)}</td>
+<td>Etting - Hepberg</td>
+<td>${e.km} km</td>
+</tr>
+`;
+
+});
+
+document.getElementById("gesamtstunden").innerText = gesamtstunden + " h";
+document.getElementById("gesamtkm").innerText = gesamtkm + " km";
+document.getElementById("pdfGesamtstunden").innerText = gesamtstunden + " h";
+document.getElementById("pdfGesamtKm").innerText = gesamtkm + " km";
+document.getElementById("uebersichtIst").innerText = gesamtstunden + " h";
+document.getElementById("uebersichtNeu").innerText = gesamtstunden + " h";
+document.getElementById("uebersichtAuszahlung").innerText = gesamtstunden + " h";
+
+}
+
+function formatDatum(d){
+const p = d.split("-");
+return p.length === 3 ? p[2] + "." + p[1] + "." + p[0] : d;
+}
+
+function naechsterTag(d){
+const datum = new Date(d + "T12:00:00");
+datum.setDate(datum.getDate() + 1);
+return datum.toLocaleDateString("de-DE");
+}
+
+function eintragLoeschen(index){
+
+if(confirm("Eintrag wirklich löschen?")){
+
+daten.splice(index,1);
+
+localStorage.setItem("stundenDaten", JSON.stringify(daten));
+
+anzeigen();
+
+}
+
+}
 </script>
+
 </body>
 </html>

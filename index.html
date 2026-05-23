@@ -1,226 +1,794 @@
-<div class="pdf-preview">
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <h2 style="color:#6e32b8;margin-bottom:18px">
-    Stundennachweis
-  </h2>
+<title>Stunden App VZ</title>
 
-  <div class="pdf-kopf" style="
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    margin-bottom:20px;
-    gap:20px;
-  ">
+<style>
 
-    <div style="line-height:1.7">
-      <div><strong>Arbeitgeber:</strong> Rundum-Service Edmong Eckl</div>
-      <div><strong>Adresse:</strong> Talstr. 13, 01824 Rosenthal-Bielatal</div>
-      <div><strong>Telefon:</strong> 0170247155</div>
-      <div><strong>Arbeitnehmer:</strong> Vlora Zogaj</div>
-    </div>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
 
-    <div style="text-align:right">
+body{
+font-family:Arial,sans-serif;
+background:#f4f2f6;
+color:#222;
+padding-bottom:50px
+}
 
-      <img src="https://i.imgur.com/L8aF4Ve.png"
-           style="width:90px;margin-bottom:10px">
+header{
+background:linear-gradient(135deg,#3a1b4c,#9b55c7);
+padding:22px;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between
+}
 
-      <div>
-        <strong>Monat/Jahr:</strong>
-        <span id="pdfMonat">05.2026</span>
-      </div>
+.header-left{
+display:flex;
+align-items:center;
+gap:18px
+}
 
-    </div>
+.logo{
+width:74px;
+height:74px;
+border-radius:50%;
+background:#fff;
+color:#7b3f98;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+font-size:34px
+}
 
-  </div>
+.header-text h1{
+font-size:28px;
+margin-bottom:4px
+}
 
-  <table style="
-    width:100%;
-    border-collapse:collapse;
-    font-size:14px;
-    margin-bottom:18px;
-  ">
+.header-text p{
+font-size:15px;
+opacity:.95
+}
 
-    <thead>
+.header-text small{
+display:block;
+margin-top:4px;
+font-size:20px;
+font-weight:700
+}
 
-      <tr>
-        <th>Datum</th>
-        <th>Dienstbeginn</th>
-        <th>Dienstende</th>
-        <th>Gesamt Arbeitszeit</th>
-        <th>U = Urlaub<br>K = Krank</th>
-        <th>Bemerkung</th>
-      </tr>
+.profilbild{
+width:74px;
+height:74px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid rgba(255,255,255,.7)
+}
 
-    </thead>
+main{
+padding:18px;
+max-width:1100px;
+margin:auto
+}
 
-    <tbody id="stundenPdfBody">
-    </tbody>
+.card{
+background:#fff;
+padding:20px;
+border-radius:22px;
+margin-bottom:18px;
+box-shadow:0 2px 10px rgba(0,0,0,.04)
+}
 
-    <tfoot>
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px
+}
 
-      <tr>
+label{
+display:block;
+font-weight:800;
+margin-bottom:8px;
+font-size:16px
+}
 
-        <td colspan="3">
-          <strong>Ist-Stunden-Gesamt:</strong>
-        </td>
+input,
+select{
+width:100%;
+padding:16px;
+border-radius:16px;
+border:1px solid #ddd;
+font-size:18px;
+background:#fff
+}
 
-        <td>
-          <strong id="pdfGesamtstunden">0 h</strong>
-        </td>
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+font-size:18px;
+font-weight:800;
+cursor:pointer;
+margin-top:14px
+}
 
-        <td colspan="2"></td>
+.saveBtn{
+background:#2e9b57;
+color:#fff
+}
 
-      </tr>
+.pdfBtn{
+background:#efe2f5;
+color:#6e32b8
+}
 
-    </tfoot>
+.deleteBtn{
+background:#f9e8e8;
+color:#d62b2b
+}
 
-  </table>
+.summary{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
+margin-bottom:18px
+}
 
-  <div style="
-    display:flex;
-    justify-content:space-between;
-    gap:30px;
-    margin-top:30px;
-  ">
+.box{
+background:#f3e9f9;
+padding:22px;
+border-radius:22px
+}
 
-    <table style="
-      width:48%;
-      border-collapse:collapse;
-      font-size:13px;
-    ">
+.box span{
+display:block;
+font-size:20px;
+margin-bottom:10px
+}
 
-      <tr>
-        <th colspan="2">Stundenübersicht</th>
-      </tr>
+.box strong{
+font-size:34px;
+color:#6e32b8
+}
 
-      <tr>
-        <td>Ist-Stunden:</td>
-        <td id="uebersichtIst">0 h</td>
-      </tr>
+.eintrag{
+background:#fff;
+border-radius:18px;
+padding:16px;
+margin-top:14px;
+border:1px solid #eee;
+position:relative
+}
 
-      <tr>
-        <td>Soll-Stunden (lt. Vertrag):</td>
-        <td>-</td>
-      </tr>
+.eintrag h3{
+margin-bottom:8px
+}
 
-      <tr>
-        <td>Differenz:</td>
-        <td>-</td>
-      </tr>
+.badge{
+display:inline-block;
+padding:6px 10px;
+border-radius:10px;
+font-size:13px;
+background:#efe2f5;
+color:#6e32b8;
+margin-top:8px
+}
 
-      <tr>
-        <td>Vormonat:</td>
-        <td>-</td>
-      </tr>
+.eintrag button{
+width:auto;
+padding:8px 14px;
+font-size:14px;
+margin-top:10px
+}
 
-      <tr>
-        <td>Neuer Stundenstand:</td>
-        <td id="uebersichtNeu">0 h</td>
-      </tr>
+.pdf-preview{
+background:#fff;
+padding:26px;
+border-radius:22px;
+margin-top:18px
+}
 
-      <tr>
-        <td>- auszuzahlende Stunden:</td>
-        <td id="uebersichtAuszahlung">0 h</td>
-      </tr>
+.pdf-preview table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px
+}
 
-    </table>
+.pdf-preview th,
+.pdf-preview td{
+border:1px solid #999;
+padding:6px;
+font-size:13px;
+text-align:center
+}
 
-    <div style="
-      width:40%;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      align-items:center;
-    ">
+.pdf-preview h2{
+color:#6e32b8;
+margin-bottom:18px
+}
 
-      <img src="https://i.imgur.com/6XGQx0x.png"
-           style="
-             width:170px;
-             margin-bottom:6px;
-             object-fit:contain;
-           ">
+.footer-info{
+margin-top:16px;
+font-size:13px;
+text-align:center;
+color:#666
+}
 
-      <div style="
-        border-top:1px solid #222;
-        width:100%;
-        text-align:center;
-        padding-top:8px;
-      ">
-        Unterschrift: Vlora Zogaj
-      </div>
+@media(max-width:700px){
 
-    </div>
+.grid2,
+.summary{
+grid-template-columns:1fr
+}
 
-  </div>
+header{
+flex-direction:column;
+gap:16px;
+align-items:flex-start
+}
 
-  <div style="margin-top:28px">
+}
 
-    <h2 style="
-      color:#6e32b8;
-      margin-bottom:14px;
-    ">
-      Fahrtkosten
-    </h2>
+</style>
+</head>
 
-    <table style="
-      width:100%;
-      border-collapse:collapse;
-      font-size:14px;
-    ">
+<body>
 
-      <thead>
+<header>
 
-        <tr>
-          <th>Datum</th>
-          <th>Strecke</th>
-          <th>KM</th>
-        </tr>
+<div class="header-left">
 
-      </thead>
+<div class="logo">
+VZ
+</div>
 
-      <tbody id="fahrtkostenPdfBody">
-      </tbody>
-
-      <tfoot>
-
-        <tr>
-
-          <td colspan="2">
-            <strong>Gesamt</strong>
-          </td>
-
-          <td>
-            <strong id="pdfGesamtKm">0 km</strong>
-          </td>
-
-        </tr>
-
-      </tfoot>
-
-    </table>
-
-    <div style="
-      margin-top:40px;
-      width:220px;
-      text-align:center;
-    ">
-
-      <img src="https://i.imgur.com/6XGQx0x.png"
-           style="
-             width:170px;
-             margin-bottom:6px;
-             object-fit:contain;
-           ">
-
-      <div style="
-        border-top:1px solid #222;
-        padding-top:8px;
-      ">
-        Unterschrift: Vlora Zogaj
-      </div>
-
-    </div>
-
-  </div>
+<div class="header-text">
+<h1>Stunden App</h1>
+<p>Stundennachweis & Fahrtenbuch</p>
+<small>Vlora Zogaj</small>
+</div>
 
 </div>
+
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
+class="profilbild">
+
+</header>
+
+<main>
+
+<div class="card grid2">
+
+<div>
+<label>Name</label>
+<input type="text" id="name" value="Vlora Zogaj">
+</div>
+
+<div>
+<label>Beschäftigungsnummer</label>
+<input type="text" id="beschaeftigung"
+placeholder="Später eintragen">
+</div>
+
+<div>
+<label>Monat</label>
+<input type="text" id="monat" value="Mai 2026">
+</div>
+
+</div>
+
+<div class="summary">
+
+<div class="box">
+<span>Stunden gesamt</span>
+<strong id="gesamtstunden">0 h</strong>
+</div>
+
+<div class="box">
+<span>KM gesamt</span>
+<strong id="gesamtkm">0 km</strong>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="grid2">
+
+<div>
+<label>Datum</label>
+<input type="date" id="datum">
+</div>
+
+<div>
+<label>Kilometer (Hinfahrt)</label>
+<input type="number" id="km" value="7">
+</div>
+
+</div>
+
+<div style="margin-top:18px">
+
+<label>Bemerkungen</label>
+
+<select id="bemerkung">
+
+<option value="">Keine</option>
+<option>Nachtzuschlag</option>
+<option>Nachtzuschlag + Sonntag</option>
+<option>Nachtzuschlag + Feiertag</option>
+<option>Urlaub</option>
+<option>Krankheit</option>
+
+</select>
+
+</div>
+
+<button class="saveBtn" onclick="speichern()">
+Speichern
+</button>
+
+<button class="pdfBtn" onclick="window.print()">
+PDF drucken
+</button>
+
+<button class="deleteBtn" onclick="allesLoeschen()">
+Alles löschen
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Einträge</h2>
+
+<div id="eintraege"></div>
+
+</div>
+
+<div class="pdf-preview">
+
+<h2>Stundennachweis</h2>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+margin-bottom:20px;
+gap:20px">
+
+<div style="line-height:1.7">
+
+<div>
+<strong>Arbeitgeber:</strong>
+Rundum-Service Edmong Eckl
+</div>
+
+<div>
+<strong>Adresse:</strong>
+Talstr. 13, 01824 Rosenthal-Bielatal
+</div>
+
+<div>
+<strong>Telefon:</strong>
+0170247155
+</div>
+
+<div>
+<strong>Arbeitnehmer:</strong>
+Vlora Zogaj
+</div>
+
+</div>
+
+<div style="text-align:right">
+
+<div>
+<strong>Monat/Jahr:</strong>
+05.2026
+</div>
+
+</div>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Datum</th>
+<th>Dienstbeginn</th>
+<th>Dienstende</th>
+<th>Gesamt Arbeitszeit</th>
+<th>U = Urlaub<br>K = Krank</th>
+<th>Bemerkung</th>
+</tr>
+
+</thead>
+
+<tbody id="stundenPdfBody"></tbody>
+
+<tfoot>
+
+<tr>
+<td colspan="3">
+<strong>Ist-Stunden-Gesamt:</strong>
+</td>
+
+<td>
+<strong id="pdfGesamtstunden">
+0 h
+</strong>
+</td>
+
+<td colspan="2"></td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<div style="
+display:flex;
+justify-content:space-between;
+gap:30px;
+margin-top:30px">
+
+<table style="
+width:48%;
+border-collapse:collapse;
+font-size:13px">
+
+<tr>
+<th colspan="2">Stundenübersicht</th>
+</tr>
+
+<tr>
+<td>Ist-Stunden:</td>
+<td id="uebersichtIst">0 h</td>
+</tr>
+
+<tr>
+<td>Soll-Stunden (lt. Vertrag):</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Differenz:</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Vormonat:</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>Neuer Stundenstand:</td>
+<td id="uebersichtNeu">0 h</td>
+</tr>
+
+<tr>
+<td>- auszuzahlende Stunden:</td>
+<td id="uebersichtAuszahlung">0 h</td>
+</tr>
+
+</table>
+
+<div style="
+width:40%;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+align-items:center">
+
+<div style="
+font-family:cursive;
+font-size:52px;
+color:#1f3fb7;
+margin-bottom:4px;
+line-height:1;
+transform:rotate(-3deg)">
+Vlora Zogaj
+</div>
+
+<div style="
+border-top:1px solid #222;
+width:100%;
+text-align:center;
+padding-top:8px">
+Unterschrift: Vlora Zogaj
+</div>
+
+</div>
+
+</div>
+
+<div style="margin-top:28px">
+
+<h2>Fahrtkosten</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Datum</th>
+<th>Strecke</th>
+<th>KM</th>
+</tr>
+
+</thead>
+
+<tbody id="fahrtkostenPdfBody"></tbody>
+
+<tfoot>
+
+<tr>
+<td colspan="2">
+<strong>Gesamt</strong>
+</td>
+
+<td>
+<strong id="pdfGesamtKm">0 km</strong>
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<div style="
+margin-top:40px;
+width:220px;
+text-align:center">
+
+<div style="
+font-family:cursive;
+font-size:52px;
+color:#1f3fb7;
+margin-bottom:4px;
+line-height:1;
+transform:rotate(-3deg)">
+Vlora Zogaj
+</div>
+
+<div style="
+border-top:1px solid #222;
+padding-top:8px">
+Unterschrift: Vlora Zogaj
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer-info">
+Die Rückfahrt wird automatisch am nächsten Tag erfasst.
+</div>
+
+</main>
+
+<script>
+
+let daten = JSON.parse(localStorage.getItem("stundenDaten")) || []
+
+anzeigen()
+
+function speichern(){
+
+const datum =
+document.getElementById("datum").value
+
+if(!datum){
+alert("Bitte Datum auswählen")
+return
+}
+
+if(daten.find(e => e.datum === datum)){
+alert("Dieses Datum existiert bereits")
+return
+}
+
+const km =
+parseInt(document.getElementById("km").value) || 7
+
+const bemerkung =
+document.getElementById("bemerkung").value
+
+daten.push({
+datum,
+stunden:24,
+km,
+bemerkung
+})
+
+localStorage.setItem(
+"stundenDaten",
+JSON.stringify(daten)
+)
+
+anzeigen()
+
+}
+
+function anzeigen(){
+
+const liste =
+document.getElementById("eintraege")
+
+liste.innerHTML = ""
+
+let gesamtstunden = 0
+let gesamtkm = 0
+
+const pdfBody =
+document.getElementById("stundenPdfBody")
+
+pdfBody.innerHTML = ""
+
+const kmBody =
+document.getElementById("fahrtkostenPdfBody")
+
+kmBody.innerHTML = ""
+
+daten.forEach((e,index)=>{
+
+gesamtstunden += 24
+gesamtkm += e.km * 2
+
+liste.innerHTML += `
+
+<div class="eintrag">
+
+<h3>${e.datum}</h3>
+
+<div>24 Stunden</div>
+
+<div>Hinfahrt: ${e.km} km</div>
+
+<div>Rückfahrt: ${e.km} km</div>
+
+${e.bemerkung ?
+`<div class="badge">${e.bemerkung}</div>` : ""}
+
+<br>
+
+<button onclick="eintragLoeschen(${index})">
+Eintrag löschen
+</button>
+
+</div>
+
+`
+
+pdfBody.innerHTML += `
+
+<tr>
+<td>${e.datum}</td>
+<td>08:30</td>
+<td>08:30</td>
+<td>24 h</td>
+<td>
+${e.bemerkung === "Urlaub" ? "U" :
+e.bemerkung === "Krankheit" ? "K" : ""}
+</td>
+<td>${e.bemerkung || ""}</td>
+</tr>
+
+`
+
+kmBody.innerHTML += `
+
+<tr>
+<td>${e.datum}</td>
+<td>Hepberg - Etting</td>
+<td>${e.km} km</td>
+</tr>
+
+<tr>
+<td>${naechsterTag(e.datum)}</td>
+<td>Etting - Hepberg</td>
+<td>${e.km} km</td>
+</tr>
+
+`
+
+})
+
+document.getElementById(
+"gesamtstunden"
+).innerText = gesamtstunden + " h"
+
+document.getElementById(
+"gesamtkm"
+).innerText = gesamtkm + " km"
+
+document.getElementById(
+"pdfGesamtstunden"
+).innerText = gesamtstunden + " h"
+
+document.getElementById(
+"pdfGesamtKm"
+).innerText = gesamtkm + " km"
+
+document.getElementById(
+"uebersichtIst"
+).innerText = gesamtstunden + " h"
+
+document.getElementById(
+"uebersichtNeu"
+).innerText = gesamtstunden + " h"
+
+document.getElementById(
+"uebersichtAuszahlung"
+).innerText = gesamtstunden + " h"
+
+}
+
+function naechsterTag(d){
+
+const datum = new Date(d)
+
+datum.setDate(
+datum.getDate()+1
+)
+
+return datum.toLocaleDateString("de-DE")
+
+}
+
+function eintragLoeschen(index){
+
+if(confirm("Eintrag wirklich löschen?")){
+
+daten.splice(index,1)
+
+localStorage.setItem(
+"stundenDaten",
+JSON.stringify(daten)
+)
+
+anzeigen()
+
+}
+
+}
+
+function allesLoeschen(){
+
+if(confirm(
+"Wirklich ALLE Einträge löschen?"
+)){
+
+daten = []
+
+localStorage.removeItem(
+"stundenDaten"
+)
+
+anzeigen()
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
